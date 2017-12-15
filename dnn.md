@@ -1,4 +1,4 @@
-在MarkdownPad2中按下F6可以進行網頁預覽
+在MarkdownPad2中按下F6可以進行網頁預覽後，右鍵>另存新檔> 存檔類型:網頁，只存HTML的方式儲存
 
 [LaTex速查](https://webdemo.myscript.com/views/math.html)
 
