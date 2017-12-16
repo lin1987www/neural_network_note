@@ -1,4 +1,4 @@
-在MarkdownPad2中按下F6可以進行網頁預覽後
+在MarkdownPad2中按下F6可以進行網頁預覽後，右鍵>另存新檔>網頁，完整封存，放入docs資料夾中，設定GitHub Pages。
 
 [LaTex速查](https://webdemo.myscript.com/views/math.html)
 
@@ -61,7 +61,7 @@ ABC &= ((ABC) ^{T}) ^{T} = (C ^{T} B ^{T} A ^{T}) ^{T}
 \begin{align}
 C(\sum _{x=1} ^{n} TrainingExample _{x} ) &= \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} (TrainingExample _{x})
 \newline
-C _{x} (TrainingExample _{x}) &= \dfrac { (output-a ^{L}) ^{2} } {2} = \dfrac { (y(x) -a ^{L}) ^{2} } {2}
+C _{x} (TrainingExample _{x}) &= \dfrac { \|output - a ^{L}\| ^{2} } {2} = \dfrac { \|y(x) -a ^{L}\| ^{2} } {2}
 \newline
 a ^{L} &= σ(z ^{L}) =
 \begin{bmatrix}
@@ -209,7 +209,7 @@ C→C' &=C + \Delta C
 \newline
 \Delta C &\approx \nabla C _{1 \times m} \Delta v _{m \times 1}
 \newline
-&因為C的值是非線性，所以是趨近值。 \newline
+&C的值不知道為何是趨近值。 \newline
 &這裡的矩陣大小為1 \times m，其中m是w跟b所有變數的總和。 \newline
 &\Delta v _{m \times 1} 包含所有w跟b變數的變動量，即為跟原本數值的差異量。 \newline
 &\nabla C _{1 \times m} 對應所有w跟b變數的變動幅度，也就C對應所有w跟b梯度。 \newline
@@ -252,12 +252,78 @@ v _{1} - \eta \dfrac {\partial C} {\partial v _{1}}
 v _{m} - \eta \dfrac {\partial C} {\partial v _{m}}
 \end{bmatrix} \newline
 &將v'還原成w跟b的形式如下 \newline
-\tag{16} w ^{l} _{jk} → w' ^{l} _{jk} &= w ^{l} _{jk} - \eta \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac { \partial C _{x} } {\partial w ^{l} _{jk}} = w ^{l} _{jk} - \eta \dfrac {\partial C} {\partial w ^{l} _{jk}} \newline
-\tag{17} b ^{l} _{j} → b' ^{l} _{j} &= b ^{l} _{j} - \eta \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac { \partial C _{x} } {\partial b ^{l} _{j}} = b ^{l} _{j} - \eta \dfrac {\partial C} {\partial b ^{l} _{j}} \newline
+\tag{16} w ^{l} _{jk} → w' ^{l} _{jk} &= w ^{l} _{jk} - \eta \dfrac {\partial} {\partial w ^{l} _{jk}} \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} = w ^{l} _{jk} - \eta \dfrac {\partial C} {\partial w ^{l} _{jk}} \newline
+\tag{17} b ^{l} _{j} → b' ^{l} _{j} &= b ^{l} _{j} - \eta \dfrac {\partial} {\partial b ^{l} _{j}} \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} = b ^{l} _{j} - \eta \dfrac {\partial C} {\partial b ^{l} _{j}} \newline
 \end{align}
 
-接下來只要計算出 \\( \nabla C _{1 \times m } \\) 的梯度就能對w跟b進行調整，但是訓練資料的數量n為數龐大時，會計算很久，因此後來改用估算的方式取少數筆數訓練資料進行估算，也就是mini-batch。
-Stochastic gradient descent隨機挑選mini-batch做w跟b的調整，每做完一次mini-batch的訓練稱為epoch。
+接下來只要計算出 \\( \nabla C _{1 \times m } \\) 的梯度就能對w跟b進行調整，但是訓練資料的數量n為數龐大時，會計算很久，因此後來改用估算的方式取少數筆數訓練資料進行估算，也就是mini-batch。Stochastic gradient descent隨機挑選mini-batch做w跟b的調整，每做完一次mini-batch的訓練稱為epoch。
+
+接下來就是如何調整出w跟b的值了，先從C的往前面的Layer推算回去
+
+\begin{align}
+C &= \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} \newline
+& \sum _{j} 這裡的j是變數，但有多少個是沒有講明的。 \newline
+C _{x} &= \dfrac {\|y(x) - a ^{L}\| ^{2} } {2} = \dfrac {\sum _{j} [(y(x) _{j} - a ^{L} _{j}) ^{2}]} {2} \newline
+& 這裡的\|y(x) - a ^{L}\|是向量相減取長度的運算，取長度就是每個entry平方後相加在開根號。 \newline
+\|v\| &= \sqrt { (v _{1}) ^{2} + (v _{2}) ^{2} + ... + (v _{j}) ^{2} } = \sqrt { \sum _{j} (v _{j}) ^{2}} \newline
+\|v\| ^{2} &= (v _{1}) ^{2} + (v _{2}) ^{2} + ... + (v _{j}) ^{2} = \sum _{j} (v _{j}) ^{2} \newline
+\dfrac {\partial C} {\partial C _{x}} &= \dfrac {1} {n} \newline 
+C &= \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\sum _{j} [(y(x) _{j} - a ^{L} _{j}) ^{2}]} {2} \newline
+\dfrac {\partial C} {\partial a ^{L} _{j}} &= \dfrac {\partial C} {\partial C _{x}} \dfrac {\partial C _{x}} {\partial a ^{L} _{j}}  = \dfrac {1} {n} \dfrac {\partial} {\partial a ^{L} _{j}} \dfrac {\sum _{j} [(y(x) _{j} - a ^{L} _{j}) ^{2}]} {2} \newline
+& 針對特定的a ^{L} _{j}進行微分，這裡的j是代數，代表指定數字，微分後除了指定對應數字的a ^{L} _{j}外其他通通視為常數，因此微分後消掉。\newline
+&= \dfrac {1} {n} \dfrac {\partial} {\partial a ^{L} _{j}} \dfrac {(y(x) _{j} - a ^{L} _{j}) ^{2}} {2} \newline
+&= \dfrac {1} {n} \dfrac {(2)(y(x) _{j} - a ^{L} _{j})} {2} (-1) \newline
+&= \dfrac {1} {n} (y(x) _{j} - a ^{L} _{j})(-1) \newline
+&= \dfrac {1} {n} (a ^{L} _{j} - y(x) _{j}) \newline
+\dfrac {\partial C} {\partial z ^{L} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \newline
+& 根據Chain \space Rule我們這裡\dfrac {\partial C} {\partial a ^{L} _{j}}由之前求得，這裡我們只要算\dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \newline
+ a ^{L} _{j} &= \sigma( a ^{L} _{j} ) \newline
+\sigma(x) &= \dfrac {1} {1+e ^{-x}} \newline
+&這裡我們稱\sigma(x) 為 activation \space function 這裡使用 sigmoid \space function \newline
+\dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} &= \sigma'(z ^{L} _{j}) \newline
+&=\sigma(z ^{L} _{j}) (1 - \sigma(z ^{L} _{j})) \newline
+&= a ^{L} _{j} (1 - a ^{L} _{j}) \newline
+z ^{L} _{j} &= \sum _{k} w ^{L} _{jk} a ^{L-1} _{k} + b ^{L} _{j} \newline
+\dfrac {\partial C} {\partial b ^{L} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} \newline
+&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} \newline
+\dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} &= 1\newline
+\dfrac {\partial C} {\partial w ^{L} _{jk}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} \newline
+&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} \newline
+\dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} &= a ^{L-1} _{k}\newline
+\dfrac {\partial C} {\partial a ^{L-1} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \newline
+&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \newline
+\dfrac {\partial z ^{L} _{j}} {\partial a ^{L-1} _{j}} &=  w ^{L} _{jk}\newline
+\dfrac {\partial C} {\partial z ^{L-1} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \newline
+&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \newline
+\dfrac {\partial a ^{L-1} _{j}} {\partial z ^{L-1} _{j}} &= \sigma(z ^{L-1} _{j}) (1 - \sigma(z ^{L-1} _{j})) \newline
+\dfrac {\partial C} {\partial b ^{L-1} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} \newline
+&= \dfrac {\partial C} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} \newline
+\dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} &= 1\newline
+\dfrac {\partial C} {\partial w ^{L-1} _{jk}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial w ^{L-1} _{jk}} \newline
+ &= \dfrac {\partial C} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial w ^{L-1} _{jk}} \newline
+\dfrac {\partial z ^{L} _{j}} {\partial w ^{L-1} _{jk}} &= a ^{L-2} _{k}\newline
+\dfrac {\partial C} {\partial a ^{L-2} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} \newline
+&= \dfrac {\partial C} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} \newline
+\dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} &=  w ^{L-1} _{jk}\newline
+\end{align}
+
+
+[Derivative of sigmoid function](https://math.stackexchange.com/a/1225116)
+\begin{align}
+\sigma(x) &= \dfrac{1}{1 + e^{-x}} \newline
+\dfrac{d}{dx}\sigma(x) &= \sigma(x)(1 - \sigma(x)) \newline
+\dfrac{d}{dx} \sigma(x) &= \dfrac{d}{dx} \left[ \dfrac{1}{1 + e^{-x}} \right] \newline
+&= \dfrac{d}{dx} \left( 1 + \mathrm{e}^{-x} \right)^{-1} \newline
+&= -(1 + e^{-x})^{-2}(-e^{-x}) \newline
+&= \dfrac{e^{-x}}{\left(1 + e^{-x}\right)^2} \newline
+&= \dfrac{1}{1 + e^{-x}\ } \cdot \dfrac{e^{-x}}{1 + e^{-x}}  \newline
+&= \dfrac{1}{1 + e^{-x}\ } \cdot \dfrac{(1 + e^{-x}) - 1}{1 + e^{-x}}  \newline
+&= \dfrac{1}{1 + e^{-x}\ } \cdot \left( \dfrac{1 + e^{-x}}{1 + e^{-x}} - \dfrac{1}{1 + e^{-x}} \right) \newline
+&= \dfrac{1}{1 + e^{-x}\ } \cdot \left( 1 - \dfrac{1}{1 + e^{-x}} \right) \newline
+&= \sigma(x) (1 - \sigma(x))
+\end{align}
+
+
 
 $$ \tag{23} a ^{l} _{j} = \sigma( \sum _{k} w ^{l} _{jk} a ^{l-1} _{k} + b ^{l} _{j} ) $$
 
@@ -350,22 +416,7 @@ Recall from the graph of the sigmoid function in the last chapter that the σ fu
 
  As an example to give you the idea, suppose we were to choose a (non-sigmoid) activation function σ so that σ′ is always positive, and never gets close to zero. That would prevent the slow-down of learning that occurs when ordinary sigmoid neurons saturate.
 
-[Derivative of sigmoid function](https://math.stackexchange.com/a/1225116)
 
-
-\begin{align}
-\sigma(x) &= \dfrac{1}{1 + e^{-x}} \newline
-\dfrac{d}{dx}\sigma(x) &= \sigma(x)(1 - \sigma(x)) \newline
-\dfrac{d}{dx} \sigma(x) &= \dfrac{d}{dx} \left[ \dfrac{1}{1 + e^{-x}} \right] \newline
-&= \dfrac{d}{dx} \left( 1 + \mathrm{e}^{-x} \right)^{-1} \newline
-&= -(1 + e^{-x})^{-2}(-e^{-x}) \newline
-&= \dfrac{e^{-x}}{\left(1 + e^{-x}\right)^2} \newline
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \dfrac{e^{-x}}{1 + e^{-x}}  \newline
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \dfrac{(1 + e^{-x}) - 1}{1 + e^{-x}}  \newline
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \left( \dfrac{1 + e^{-x}}{1 + e^{-x}} - \dfrac{1}{1 + e^{-x}} \right) \newline
-&= \dfrac{1}{1 + e^{-x}\ } \cdot \left( 1 - \dfrac{1}{1 + e^{-x}} \right) \newline
-&= \sigma(x) \cdot (1 - \sigma(x))
-\end{align}
 
 Quadratic cost 遇到的學習緩慢的問題 saturated 
 
