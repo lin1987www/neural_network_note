@@ -63,7 +63,7 @@ C(\sum _{x=1} ^{n} TrainingExample _{x} ) &= \dfrac {1} {n} \sum _{x=1} ^{n} C _
 \newline
 C _{x} (TrainingExample _{x}) &= \dfrac { \|output - a ^{L}\| ^{2} } {2} = \dfrac { \|y(x) -a ^{L}\| ^{2} } {2}
 \newline
-a ^{L} &= σ(z ^{L}) =
+a ^{L} = σ(z ^{L}) &=
 \begin{bmatrix}
 \dfrac {1} {1+e ^{-z ^{L} _{1}} }
 \newline
@@ -186,7 +186,7 @@ z ^{1} &=
 \end{bmatrix}
 \newline
 \newline
-a ^{0} &= input =
+a ^{0} = input &=
 \begin{bmatrix}
 a ^{0} _{1}
 \newline
@@ -210,21 +210,17 @@ C→C' &=C + \Delta C
 \Delta C &\approx \nabla C _{1 \times m} \Delta v _{m \times 1}
 \newline
 &C的值不知道為何是趨近值。 \newline
-&這裡的矩陣大小為1 \times m，其中m是w跟b所有變數的總和。 \newline
+&這裡的矩陣大小為1 \times m，其中m是w跟b所有變數的個數總和。 \newline
 &\Delta v _{m \times 1} 包含所有w跟b變數的變動量，即為跟原本數值的差異量。 \newline
 &\nabla C _{1 \times m} 對應所有w跟b變數的變動幅度，也就C對應所有w跟b梯度。 \newline
 \newline
-\nabla C _{1 \times m} &= \dfrac {1} {n} \sum _{x=1} ^{n} (\nabla C _{x}) _{ 1 \times m}  
-\newline
-&\nabla C _{1 \times m} =
-\begin{bmatrix} \dfrac {\partial C} {\partial v _{1}} & \dfrac {\partial C} {\partial v _{2}} & . & . & . & \dfrac {\partial C} {\partial v _{m}} \end{bmatrix}
-\newline
-( &\nabla C _{x}) _{1 \times m} =
-\begin{bmatrix} \dfrac {\partial C _{x} } {\partial v _{1}} & \dfrac {\partial C _{x} } {\partial v _{2}} & . & . & . & \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix}
-\newline
-\nabla C _{1 \times m} &= \dfrac {1} {n} \sum _{x=1} ^{n} (\nabla C _{x}) _{ 1 \times m} = 
-\begin{bmatrix} \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac { \partial C _{x} } {\partial v _{1}} & \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x} } {\partial v _{2}} & . & . & . & \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix} 
-\newline
+\nabla C _{1 \times m} &= \dfrac {1} {n} \sum _{x=1} ^{n} (\nabla C _{x}) _{ 1 \times m} \newline
+\nabla C _{1 \times m} &=
+\begin{bmatrix} \dfrac {\partial C} {\partial v _{1}} & \dfrac {\partial C} {\partial v _{2}} & . & . & . & \dfrac {\partial C} {\partial v _{m}} \end{bmatrix} \newline
+( \nabla C _{x}) _{1 \times m} &=
+\begin{bmatrix} \dfrac {\partial C _{x} } {\partial v _{1}} & \dfrac {\partial C _{x} } {\partial v _{2}} & . & . & . & \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix} \newline
+\nabla C _{1 \times m} = \dfrac {1} {n} \sum _{x=1} ^{n} (\nabla C _{x}) _{ 1 \times m} &= 
+\begin{bmatrix} \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac { \partial C _{x} } {\partial v _{1}} & \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x} } {\partial v _{2}} & . & . & . & \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix} \newline
 &\nabla C _{1 \times m} 是由n筆訓練資料的梯度 (\nabla C _{x}) _{ 1 \times m} 的總和平均值。\newline
 &儘管在同一網路中，每筆訓練資料對應w跟b的梯度皆不同，因為輸入輸出不同造成各自對應的梯度。\newline
 \newline
