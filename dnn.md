@@ -26,7 +26,19 @@ The second assumption we make about the cost is that it can be written as a func
 ![](images/ab^l_j.png)
 ![](images/cost_c.png)
 
+
+根據上圖，假設輸入為\\(a ^{0}\\)，共有2個輸入\\(a ^{0} _{1}, a^{0} _{2}\\)，我們由以下矩陣表示
+
 \begin{align}
+\begin{bmatrix}
+w^{1}
+\end{bmatrix}
+\begin{bmatrix}
+w^{2}
+\end{bmatrix}
+\begin{bmatrix}
+w^{3}
+\end{bmatrix}=
 \begin{bmatrix}
 w^{1} _{1}
 \newline
@@ -47,22 +59,206 @@ w^{2} _{4}
 w^{3} _{1}
 \newline
 w^{3} _{2}
+\end{bmatrix}=
+\begin{bmatrix}
+[w^{1} _{11} w^{1} _{12}]
+\newline
+[w^{1} _{21} w^{1} _{22}]
+\newline
+[w^{1} _{31} w^{1} _{32}]
+\end{bmatrix}
+\begin{bmatrix}
+[w^{2} _{11}  w^{2} _{12}  w^{2} _{13}]
+\newline
+[w^{2} _{21}  w^{2} _{22}  w^{2} _{23}]
+\newline
+[w^{2} _{31}  w^{2} _{32}  w^{2} _{33}]
+\newline
+[w^{2} _{41}  w^{2} _{42}  w^{2} _{43}]
+\end{bmatrix}
+\begin{bmatrix}
+[w^{3} _{11} w^{3} _{12} w^{3} _{13} w^{3} _{14}]
+\newline
+[w^{3} _{21} w^{3} _{22} w^{3} _{23} w^{3} _{24}]
 \end{bmatrix}
 \end{align}
-上述結構 w b a 各有一份，除了輸入層外，為了方便可以把輸入層當成a的第0層 \\( a ^{0} _{j} \\) 表示。
 
-假設A、B、C皆為一個矩陣，則矩陣乘法
 \begin{align}
-(ABC) ^{T} &= C ^{T} B ^{T} A ^{T}
+\begin{bmatrix}
+a ^{0}
+\end{bmatrix}
+\begin{bmatrix}
+a ^{1}
+\end{bmatrix}
+\begin{bmatrix}
+a ^{2}
+\end{bmatrix}
+\begin{bmatrix}
+a ^{3}
+\end{bmatrix} &=
+\begin{bmatrix}
+a ^{0} _{1}
 \newline
-ABC &= ((ABC) ^{T}) ^{T} = (C ^{T} B ^{T} A ^{T}) ^{T}
+a ^{0} _{2}
+\end{bmatrix}
+\begin{bmatrix}
+a ^{1} _{1}
+\newline
+a ^{1} _{2}
+\newline
+a ^{1} _{3}
+\end{bmatrix}
+\begin{bmatrix}
+a ^{2} _{1}
+\newline
+a ^{2} _{2}
+\newline
+a ^{2} _{3}
+\newline
+a ^{2} _{4}
+\end{bmatrix}
+\begin{bmatrix}
+a ^{3} _{1}
+\newline
+a ^{3} _{2}
+\end{bmatrix} \newline &=
+\begin{bmatrix}
+a ^{0} _{1}
+\newline
+a ^{0} _{2}
+\end{bmatrix}
+\begin{bmatrix}
+σ(z ^{1} _{1})
+\newline
+σ(z ^{1} _{2})
+\newline
+σ(z ^{1} _{3})
+\end{bmatrix}
+\begin{bmatrix}
+σ(z ^{2} _{1})
+\newline
+σ(z ^{2} _{2})
+\newline
+σ(z ^{2} _{3})
+\newline
+σ(z ^{2} _{4})
+\end{bmatrix}
+\begin{bmatrix}
+σ(z ^{3} _{1})
+\newline
+σ(z ^{3} _{2})
+\end{bmatrix}
 \end{align}
 
 \begin{align}
-C(\sum _{x=1} ^{n} TrainingExample _{x} ) &= \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} (TrainingExample _{x})
+\begin{bmatrix}
+b ^{1}
+\end{bmatrix}
+\begin{bmatrix}
+b ^{2}
+\end{bmatrix}
+\begin{bmatrix}
+b ^{3}
+\end{bmatrix}=
+\begin{bmatrix}
+b ^{1} _{1}
 \newline
-C _{x} (TrainingExample _{x}) &= \dfrac { \|output - a ^{L}\| ^{2} } {2} = \dfrac { \|y(x) -a ^{L}\| ^{2} } {2}
+b ^{1} _{2}
 \newline
+b ^{1} _{3}
+\end{bmatrix}
+\begin{bmatrix}
+b ^{2} _{1}
+\newline
+b ^{2} _{2}
+\newline
+b ^{2} _{3}
+\newline
+b ^{2} _{4}
+\end{bmatrix}
+\begin{bmatrix}
+b ^{3} _{1}
+\newline
+b ^{3} _{2}
+\end{bmatrix}
+\end{align}
+
+\begin{align}
+\begin{bmatrix}
+z ^{1}
+\end{bmatrix}
+\begin{bmatrix}
+z ^{2}
+\end{bmatrix}
+\begin{bmatrix}
+z ^{3}
+\end{bmatrix}=
+\begin{bmatrix}
+z ^{1} _{1}
+\newline
+z ^{1} _{2}
+\newline
+z ^{1} _{3}
+\end{bmatrix}
+\begin{bmatrix}
+z ^{2} _{1}
+\newline
+z ^{2} _{2}
+\newline
+z ^{2} _{3}
+\newline
+z ^{2} _{4}
+\end{bmatrix}
+\begin{bmatrix}
+z ^{3} _{1}
+\newline
+z ^{3} _{2}
+\end{bmatrix} &=
+\begin{bmatrix}
+w ^{1} _{1} a ^{0} + b ^{1} _{1}
+\newline
+w ^{1} _{2} a ^{0} + b ^{1} _{2}
+\newline
+w ^{1} _{3} a ^{0} + b ^{1} _{3}
+\end{bmatrix}
+\begin{bmatrix}
+w ^{2} _{1} a ^{1} + b ^{2} _{1}
+\newline
+w ^{2} _{2} a ^{1} + b ^{2} _{2}
+\newline
+w ^{2} _{3} a ^{1} + b ^{2} _{3}
+\newline
+w ^{2} _{4} a ^{1} + b ^{2} _{4}
+\end{bmatrix}
+\begin{bmatrix}
+w ^{3} _{1} a ^{2} + b ^{3} _{1}
+\newline
+w ^{3} _{2} a ^{2} + b ^{3} _{2}
+\end{bmatrix}\newline &=
+\begin{bmatrix}
+w ^{1} a ^{0} + b ^{1}
+\end{bmatrix}
+\begin{bmatrix}
+w ^{2} a ^{1} + b ^{2}
+\end{bmatrix}
+\begin{bmatrix}
+w ^{3} a ^{2} + b ^{3}
+\end{bmatrix}
+\end{align}
+
+\begin{align}
+C &= \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} (output(x), input(x)) \newline
+C _{x} (output(x), input(x)) &= \dfrac { \|output(x) -a ^{L}\| ^{2} } {2} \newline
+C &= \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} \newline
+C _{x} &= \dfrac {\|y(x) - a ^{L}\| ^{2} } {2} = \dfrac {\sum _{j} (y(x) _{j} - a ^{L} _{j}) ^{2}} {2} \newline
+	& \sum _{j} 這裡的j是變數，但j有多少個是沒有講明的。 \newline
+& 這裡的\|y(x) - a ^{L}\|是向量相減取長度的運算，取長度就是每個entry平方後相加在開根號。 \newline
+	\|v\| &= \sqrt { (v _{1}) ^{2} + (v _{2}) ^{2} + ... + (v _{j}) ^{2} } = \sqrt { \sum _{j} (v _{j}) ^{2}} \newline
+	\|v\| ^{2} &= (v _{1}) ^{2} + (v _{2}) ^{2} + ... + (v _{j}) ^{2} = \sum _{j} (v _{j}) ^{2} \newline
+C &= \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\sum _{j} (y(x) _{j} - a ^{L} _{j}) ^{2}} {2} \newline
+a ^{L} &= σ(z ^{L}) \newline
+σ(x) &= \dfrac {1} {1+e ^{-x}} \newline
+z ^{L} &= w ^{L} a ^{L-1} + b^{L} \newline
 a ^{L} = σ(z ^{L}) &=
 \begin{bmatrix}
 \dfrac {1} {1+e ^{-z ^{L} _{1}} }
@@ -90,7 +286,7 @@ z ^{L} &=
 \sum _{k} w ^{L} _{jk} a ^{L-1} _{k}  + b ^{L} _{j}
 \end{bmatrix}
 =\begin{bmatrix}
-(w ^{L} _{1}) ^{T} a ^{L-1}  + b ^{L} _{1}
+w ^{L} _{1} a ^{L-1}  + b ^{L} _{1}
 \newline
 .
 \newline
@@ -98,7 +294,10 @@ z ^{L} &=
 \newline
 .
 \newline
-(w ^{L} _{j}) ^{T} a ^{L-1}  + b ^{L} _{j}
+w ^{L} _{j} a ^{L-1}  + b ^{L} _{j}
+\end{bmatrix}
+=\begin{bmatrix}
+w ^{L} a ^{L-1}  + b ^{L}
 \end{bmatrix}
 \newline
 \newline
@@ -129,7 +328,7 @@ z ^{L-1} &=
 \sum _{k} w ^{L-1} _{jk} a ^{L-2} _{k}  + b ^{L-1} _{j}
 \end{bmatrix}
 =\begin{bmatrix}
-(w ^{L-1} _{1}) ^{T} a ^{L-2}  + b ^{L-1} _{1}
+(w ^{L-1} _{1}) a ^{L-2}  + b ^{L-1} _{1}
 \newline
 .
 \newline
@@ -137,7 +336,10 @@ z ^{L-1} &=
 \newline
 .
 \newline
-(w ^{L-1} _{j}) ^{T} a ^{L-2}  + b ^{L-1} _{j}
+w ^{L-1} _{j} a ^{L-2}  + b ^{L-1} _{j}
+\end{bmatrix}
+=\begin{bmatrix}
+w ^{L-1} a ^{L-2}  + b ^{L-1}
 \end{bmatrix}
 \newline
 \newline
@@ -174,7 +376,7 @@ z ^{1} &=
 \sum _{k} w ^{1} _{jk} a ^{0} _{k}  + b ^{1} _{j}
 \end{bmatrix}
 =\begin{bmatrix}
-(w ^{1} _{1}) ^{T} a ^{0}  + b ^{1} _{1}
+w ^{1} _{1} a ^{0}  + b ^{1} _{1}
 \newline
 .
 \newline
@@ -182,11 +384,14 @@ z ^{1} &=
 \newline
 .
 \newline
-(w ^{L} _{j}) ^{T} a ^{0}  + b ^{1} _{j}
+w ^{L} _{j} a ^{0}  + b ^{1} _{j}
+\end{bmatrix}
+=\begin{bmatrix}
+w ^{1} a ^{0}  + b ^{1}
 \end{bmatrix}
 \newline
 \newline
-a ^{0} = input &=
+a ^{0} = input(x) &=
 \begin{bmatrix}
 a ^{0} _{1}
 \newline
@@ -199,43 +404,32 @@ a ^{0} _{1}
 a ^{0} _{j}
 \end{bmatrix}
 \end{align}
-每筆\\( TrainingExample _{x} \\)包含input跟ouput，當輸入資料為input時，對應的輸出則為output。
-a代表 activation value，σ代表activation function，以上使用sigmoid為activation function。
-若能讓C接近0，代表神經網路已經訓練好了，因此目標就是要想辦法讓C接近0，因此調整神經網路中的w跟b值。
+每筆資料包含input(x)跟ouput(x)，當輸入資料為input(x)時，對應的輸出則為output(x)。
+a代表 activation value，σ代表activation function，以上activation function為sigmoid function。
+若C接近0，代表輸入資料input(x)與預期輸出結果output(x)越接近，因此透過調整神經網路中的變數值(w跟b)。
 
 \begin{align}
 \Delta 表示對應原值得變動量, \nabla 為梯度，對應所有變數的微分。 \newline
-C→C' &=C + \Delta C
-\newline
-\Delta C &\approx \nabla C _{1 \times m} \Delta v _{m \times 1}
-\newline
-&C的值不知道為何是趨近值。 \newline
-&這裡的矩陣大小為1 \times m，其中m是w跟b所有變數的個數總和。 \newline
-&\Delta v _{m \times 1} 包含所有w跟b變數的變動量，即為跟原本數值的差異量。 \newline
-&\nabla C _{1 \times m} 對應所有w跟b變數的變動幅度，也就C對應所有w跟b梯度。 \newline
-\newline
-\nabla C _{1 \times m} &= \dfrac {1} {n} \sum _{x=1} ^{n} (\nabla C _{x}) _{ 1 \times m} \newline
-\nabla C _{1 \times m} &=
-\begin{bmatrix} \dfrac {\partial C} {\partial v _{1}} & \dfrac {\partial C} {\partial v _{2}} & . & . & . & \dfrac {\partial C} {\partial v _{m}} \end{bmatrix} \newline
-( \nabla C _{x}) _{1 \times m} &=
-\begin{bmatrix} \dfrac {\partial C _{x} } {\partial v _{1}} & \dfrac {\partial C _{x} } {\partial v _{2}} & . & . & . & \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix} \newline
-\nabla C _{1 \times m} = \dfrac {1} {n} \sum _{x=1} ^{n} (\nabla C _{x}) _{ 1 \times m} &= 
-\begin{bmatrix} \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac { \partial C _{x} } {\partial v _{1}} & \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x} } {\partial v _{2}} & . & . & . & \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix} \newline
-&\nabla C _{1 \times m} 是由n筆訓練資料的梯度 (\nabla C _{x}) _{ 1 \times m} 的總和平均值。\newline
-&儘管在同一網路中，每筆訓練資料對應w跟b的梯度皆不同，因為輸入輸出不同造成各自對應的梯度。\newline
-\newline
-&為了使C變小，所以將 \Delta v _{m \times 1} 定義如下 \newline
-\tag{14} \Delta v _{m \times 1} &= - \eta ( \nabla C _{1 \times m} )^{T} \newline
+C→C' &=C + \Delta C \newline
+\Delta C &\approx \nabla C \Delta v \newline
+&ΔC的值不知道為何是趨近值。 \newline
+&\Delta v包含網路中所有w跟b變數的變動量，即為跟原本數值的差異量。 \newline
+&\nabla C對應所有w跟b變數的變動幅度，也就C對應對應所有w跟b梯度。 \newline
+&\nabla C跟\nabla C _{x} 都是1 \times m的矩陣，m是所有變數w跟b的個數。 \newline
+&\nabla C 是由n筆訓練資料的梯度 \nabla C _{x} 的總和平均值。\newline
+&儘管在同一網路中，每筆訓練資料對應同一個w跟b的梯度皆不同。\newline
+&為了使C變小，所以將 \Delta v 定義如下 \newline
+\tag{14} \Delta v &= - \eta \nabla C \newline
 &\eta為正數，也就是所謂的learning \space rate \newline
-\Delta C &\approx \nabla C _{1 \times m} \Delta v _{m \times 1} \newline
-&\approx - \eta \nabla C _{1 \times m} ( \nabla C _{1 \times m} )^{T} \newline
-&\approx - \eta \| \nabla C _{1 \times m} \| ^{2} \newline
+\Delta C &\approx \nabla C \Delta v \newline
+&\approx - \eta \nabla C \nabla C  \newline
+&\approx - \eta \| \nabla C \| ^{2} \newline
 C' &= C + \Delta C \newline
-&= C - \eta \| \nabla C _{1 \times m} \| ^{2} \newline
-& 如此一來C'必然會越來越小，接下來就是調整w跟b所有變數v _{m \times 1}。 \newline
-v _{m \times 1} →v' _{m \times 1} &=v _{m \times 1} + \Delta v _{m \times 1} \newline
-\tag{15} &=v _{m \times 1} - \eta ( \nabla C _{1 \times m} )^{T} \newline
-v' _{m \times 1} &=
+&= C - \eta \| \nabla C \| ^{2} \newline
+& 如此一來C'必然會越來越小，接下來就是調整w跟b所有變數v。 \newline
+v →v' &=v + \Delta v \newline
+\tag{15} &=v - \eta \nabla C \newline
+v' &=
 \begin{bmatrix}
 v _{1} - \eta \dfrac {\partial C} {\partial v _{1}}
 \newline
@@ -247,59 +441,56 @@ v _{1} - \eta \dfrac {\partial C} {\partial v _{1}}
 \newline
 v _{m} - \eta \dfrac {\partial C} {\partial v _{m}}
 \end{bmatrix} \newline
-&將v'還原成w跟b的形式如下 \newline
-\tag{16} w ^{l} _{jk} → w' ^{l} _{jk} &= w ^{l} _{jk} - \eta \dfrac {\partial} {\partial w ^{l} _{jk}} \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} = w ^{l} _{jk} - \eta \dfrac {\partial C} {\partial w ^{l} _{jk}} \newline
-\tag{17} b ^{l} _{j} → b' ^{l} _{j} &= b ^{l} _{j} - \eta \dfrac {\partial} {\partial b ^{l} _{j}} \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} = b ^{l} _{j} - \eta \dfrac {\partial C} {\partial b ^{l} _{j}} \newline
+\dfrac {\partial C} {\partial v _{m}} &= \dfrac {\partial \dfrac {1} {n} \sum ^{n} _{x=1} C _{x}} {\partial v _{m}} = \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x}} {\partial v _{m}} \newline
+\nabla C &=\begin{bmatrix} \dfrac {\partial C} {\partial v _{1}} & . & . & . & \dfrac {\partial C} {\partial v _{m}} \end{bmatrix} \newline
+	&= \begin{bmatrix} \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac { \partial C _{x} } {\partial v _{1}} & . & . & . & \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix} \newline
+	&= \dfrac {1} {n} \sum _{x=1} ^{n} \begin{bmatrix} \dfrac { \partial C _{x} } {\partial v _{1}} & . & . & . & \dfrac {\partial C _{x} } {\partial v _{m}} \end{bmatrix} \newline
+	&= \dfrac {1} {n} \sum _{x=1} ^{n} \nabla C _{x} \newline
+\dfrac {\partial C} {\partial w ^{l} _{jk}} &= \dfrac {\partial \dfrac {1} {n} \sum ^{n} _{x=1} C _{x}} {\partial w ^{l} _{jk}} = \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x}} {\partial w ^{l} _{jk}} \newline
+\dfrac {\partial C} {\partial b ^{l} _{j}} &= \dfrac {\partial \dfrac {1} {n} \sum ^{n} _{x=1} C _{x}} {\partial b ^{l} _{j}} = \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x}} {\partial b ^{l} _{j}} \newline
+\tag{16} w ^{l} _{jk} → w' ^{l} _{jk} &= w ^{l} _{jk} - \eta \dfrac {\partial C} {\partial w ^{l} _{jk}} = w ^{l} _{jk} - \eta \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x}} {\partial w ^{l} _{jk}} \newline
+\tag{17} b ^{l} _{j} → b' ^{l} _{j} &= b ^{l} _{j} - \eta \dfrac {\partial C} {\partial b ^{l} _{j}} = b ^{l} _{j} - \eta \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\partial C _{x}} {\partial b ^{l} _{j}} \newline
 \end{align}
 
-接下來只要計算出 \\( \nabla C _{1 \times m } \\) 的梯度就能對w跟b進行調整，但是訓練資料的數量n為數龐大時，會計算很久，因此後來改用估算的方式取少數筆數訓練資料進行估算，也就是mini-batch。Stochastic gradient descent隨機挑選mini-batch做w跟b的調整，每做完一次mini-batch的訓練稱為epoch。
 
-接下來就是如何調整出w跟b的值了，先從C的往前面的Layer推算回去
+接下來只要計算出\\( \nabla C \\)的梯度就能對w跟b進行調整，計算\\( \nabla C \\)前必須先算出個別資料的梯度\\( \nabla C _{x} \\)加總後取平均訓練資料的數量。但是訓練資料的數量n為數龐大時，會計算很久，因此後來改用估算的方式取少數筆數訓練資料進行估算，也就是mini-batch。Stochastic gradient descent隨機挑選小量的資料筆數進行估算，每做完一次mini-batch的訓練稱為epoch。
 
 \begin{align}
-C &= \dfrac {1} {n} \sum _{x=1} ^{n} C _{x} \newline
-& \sum _{j} 這裡的j是變數，但有多少個是沒有講明的。 \newline
-C _{x} &= \dfrac {\|y(x) - a ^{L}\| ^{2} } {2} = \dfrac {\sum _{j} [(y(x) _{j} - a ^{L} _{j}) ^{2}]} {2} \newline
-& 這裡的\|y(x) - a ^{L}\|是向量相減取長度的運算，取長度就是每個entry平方後相加在開根號。 \newline
-\|v\| &= \sqrt { (v _{1}) ^{2} + (v _{2}) ^{2} + ... + (v _{j}) ^{2} } = \sqrt { \sum _{j} (v _{j}) ^{2}} \newline
-\|v\| ^{2} &= (v _{1}) ^{2} + (v _{2}) ^{2} + ... + (v _{j}) ^{2} = \sum _{j} (v _{j}) ^{2} \newline
-\dfrac {\partial C} {\partial C _{x}} &= \dfrac {1} {n} \newline 
-C &= \dfrac {1} {n} \sum _{x=1} ^{n} \dfrac {\sum _{j} [(y(x) _{j} - a ^{L} _{j}) ^{2}]} {2} \newline
-\dfrac {\partial C} {\partial a ^{L} _{j}} &= \dfrac {\partial C} {\partial C _{x}} \dfrac {\partial C _{x}} {\partial a ^{L} _{j}}  = \dfrac {1} {n} \dfrac {\partial} {\partial a ^{L} _{j}} \dfrac {\sum _{j} [(y(x) _{j} - a ^{L} _{j}) ^{2}]} {2} \newline
-& 針對特定的a ^{L} _{j}進行微分，這裡的j是代數，代表指定數字，微分後除了指定對應數字的a ^{L} _{j}外其他通通視為常數，因此微分後消掉。\newline
-&= \dfrac {1} {n} \dfrac {\partial} {\partial a ^{L} _{j}} \dfrac {(y(x) _{j} - a ^{L} _{j}) ^{2}} {2} \newline
-&= \dfrac {1} {n} \dfrac {(2)(y(x) _{j} - a ^{L} _{j})} {2} (-1) \newline
-&= \dfrac {1} {n} (y(x) _{j} - a ^{L} _{j})(-1) \newline
-&= \dfrac {1} {n} (a ^{L} _{j} - y(x) _{j}) \newline
-\dfrac {\partial C} {\partial z ^{L} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \newline
-& 根據Chain \space Rule我們這裡\dfrac {\partial C} {\partial a ^{L} _{j}}由之前求得，這裡我們只要算\dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \newline
+\dfrac {\partial C _{x}} {\partial a ^{L} _{j}}  &= \dfrac {\partial} {\partial a ^{L} _{j}} \dfrac {\sum _{j} (y(x) _{j} - a^{L} _{j}) ^{2}} {2} \newline
+	& 針對特定的a ^{L} _{j}進行微分，這裡的j是代數，代表指定數字，微分後除了指定對應數字的a ^{L} _{j}外其他通通視為常數，因此微分後消掉。\newline
+	&= \dfrac {\partial} {\partial a ^{L} _{j}} \dfrac {(y(x) _{j} - a ^{L} _{j}) ^{2}} {2} \newline
+	&= \dfrac {(2)(y(x) _{j} - a ^{L} _{j})} {2} (-1) \newline
+	&= (y(x) _{j} - a ^{L} _{j})(-1) \newline
+	&= a ^{L} _{j} - y(x) _{j} \newline
+\dfrac {\partial C _{x}} {\partial z ^{L} _{j}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \newline
+& 根據Chain \space Rule我們這裡\dfrac {\partial C _{x}} {\partial a ^{L} _{j}}由之前求得，這裡我們只要算\dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}}。 \newline
  a ^{L} _{j} &= \sigma( a ^{L} _{j} ) \newline
 \sigma(x) &= \dfrac {1} {1+e ^{-x}} \newline
-&這裡我們稱\sigma(x) 為 activation \space function 這裡使用 sigmoid \space function \newline
+&這裡我們稱\sigma(x) 為 activation \space function 這裡使用 sigmoid \space function。 \newline
 \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} &= \sigma'(z ^{L} _{j}) \newline
-&=\sigma(z ^{L} _{j}) (1 - \sigma(z ^{L} _{j})) \newline
-&= a ^{L} _{j} (1 - a ^{L} _{j}) \newline
+	&=\sigma(z ^{L} _{j}) (1 - \sigma(z ^{L} _{j})) \newline
+	&= a ^{L} _{j} (1 - a ^{L} _{j}) \newline
 z ^{L} _{j} &= \sum _{k} w ^{L} _{jk} a ^{L-1} _{k} + b ^{L} _{j} \newline
-\dfrac {\partial C} {\partial b ^{L} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} \newline
-&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} \newline
+\dfrac {\partial C _{x}} {\partial b ^{L} _{j}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} \newline
+	&= \dfrac {\partial C _{x}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} \newline
 \dfrac {\partial z ^{L} _{j}} {\partial b ^{L} _{j}} &= 1\newline
-\dfrac {\partial C} {\partial w ^{L} _{jk}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} \newline
-&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} \newline
+\dfrac {\partial C _{x}} {\partial w ^{L} _{jk}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} \newline
+	&= \dfrac {\partial C _{x}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} \newline
 \dfrac {\partial z ^{L} _{j}} {\partial w ^{L} _{jk}} &= a ^{L-1} _{k}\newline
-\dfrac {\partial C} {\partial a ^{L-1} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \newline
-&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \newline
+\dfrac {\partial C _{x}} {\partial a ^{L-1} _{j}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \newline
+	&= \dfrac {\partial C _{x}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \newline
 \dfrac {\partial z ^{L} _{j}} {\partial a ^{L-1} _{j}} &=  w ^{L} _{jk}\newline
-\dfrac {\partial C} {\partial z ^{L-1} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \newline
-&= \dfrac {\partial C} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \newline
+\dfrac {\partial C _{x}} {\partial z ^{L-1} _{j}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \newline
+	&= \dfrac {\partial C _{x}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \newline
 \dfrac {\partial a ^{L-1} _{j}} {\partial z ^{L-1} _{j}} &= \sigma(z ^{L-1} _{j}) (1 - \sigma(z ^{L-1} _{j})) \newline
-\dfrac {\partial C} {\partial b ^{L-1} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} \newline
-&= \dfrac {\partial C} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} \newline
+\dfrac {\partial C _{x}} {\partial b ^{L-1} _{j}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} \newline
+	&= \dfrac {\partial C _{x}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} \newline
 \dfrac {\partial z ^{L-1} _{j}} {\partial b ^{L-1} _{j}} &= 1\newline
-\dfrac {\partial C} {\partial w ^{L-1} _{jk}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial w ^{L-1} _{jk}} \newline
- &= \dfrac {\partial C} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial w ^{L-1} _{jk}} \newline
+\dfrac {\partial C _{x}} {\partial w ^{L-1} _{jk}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial w ^{L-1} _{jk}} \newline
+	&= \dfrac {\partial C _{x}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial w ^{L-1} _{jk}} \newline
 \dfrac {\partial z ^{L} _{j}} {\partial w ^{L-1} _{jk}} &= a ^{L-2} _{k}\newline
-\dfrac {\partial C} {\partial a ^{L-2} _{j}} &= \dfrac {\partial C} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} \newline
-&= \dfrac {\partial C} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} \newline
+\dfrac {\partial C _{x}} {\partial a ^{L-2} _{j}} &= \dfrac {\partial C _{x}} {\partial a ^{L} _{j}} \dfrac {\partial a ^{L} _{j}} {\partial z ^{L} _{j}} \dfrac {\partial z ^{L} _{j}} {\partial  a ^{L-1} _{j}} \dfrac {\partial a ^{L-1} _{j}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} \newline
+	&= \dfrac {\partial C _{x}} {\partial  z ^{L-1} _{j}} \dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} \newline
 \dfrac {\partial z ^{L-1} _{j}} {\partial a ^{L-2} _{j}} &=  w ^{L-1} _{jk}\newline
 \end{align}
 
@@ -322,6 +513,12 @@ z ^{L} _{j} &= \sum _{k} w ^{L} _{jk} a ^{L-1} _{k} + b ^{L} _{j} \newline
 
 
 $$ \tag{23} a ^{l} _{j} = \sigma( \sum _{k} w ^{l} _{jk} a ^{l-1} _{k} + b ^{l} _{j} ) $$
+
+假設A、B、C皆為一個矩陣，則矩陣乘法
+\begin{align}
+(ABC) ^{T} &= C ^{T} B ^{T} A ^{T} \newline
+ABC &= ((ABC) ^{T}) ^{T} = (C ^{T} B ^{T} A ^{T}) ^{T} \newline
+\end{align}
 
 矩陣可以看成線性空間的向量與維度的關係，但無固定行列，會根據矩陣相乘的前後順序有所不同，如上公式所示。 比方說3維空間投射到2維空間做一個3D正交投影，3維空間一個點A可以用1×3或3×1的矩陣表示，那從3D正交投影到2D的矩陣T就是3×2或2×3的矩陣，投射後的矩陣大小就是1×2或2×1的矩陣B。 矩陣乘法表示如下
 
